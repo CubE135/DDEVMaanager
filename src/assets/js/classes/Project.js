@@ -7,7 +7,7 @@ module.exports = class Project {
         this.type = data.type;
     }
 
-    render() {
+    buildHtml() {
         let playPauseButton = 'play';
         let playPauseButtonTitle = 'Start';
         let cliDisabled = 'disabled="true"';
@@ -16,28 +16,27 @@ module.exports = class Project {
             playPauseButtonTitle = 'Stop';
             cliDisabled = '';
         }
-        let html = `
-            <div class="project" data-project-name="`+this.name+`">
-                <img src="assets/img/folder.png" alt="folder"/>
+        return `
+            <div class="project" data-project-name="`+this.name+`" data-status="`+this.status+`">
+                <img class="folder" src="assets/img/folder.png" alt="Open Folder" data-approot="`+this.approot+`"/>
                 <span class="name">`+this.name+`</span>
                 <span class="status `+this.status+`"></span>
                 <div class="buttons">
-                    <i class="fas fa-`+playPauseButton+`" title="`+playPauseButtonTitle+`"></i>
-                    <i class="fas fa-terminal" `+cliDisabled+`></i>
+                    <i class="startStop fas fa-`+playPauseButton+`" title="`+playPauseButtonTitle+`"></i>
+                    <i class="startCli fas fa-terminal" `+cliDisabled+`></i>
                 </div>
             </div>
         `;
-        $('main').append(html);
+    }
+
+    render() {
+        $('main').append(this.buildHtml());
     }
 
     update() {
         let element = $('.project[data-project-name="'+this.name+'"]')
-        if (element.length > 0){
-            let status = element.find('.status');
-            status.removeClass('paused')
-            status.removeClass('stopped')
-            status.removeClass('running')
-            status.addClass(this.status);
+        if (element.attr('data-status') !== this.status){
+            element.replaceWith(this.buildHtml());
         }
     }
 }

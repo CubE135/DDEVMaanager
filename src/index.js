@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, screen } = require('electron');
+const { app, BrowserWindow, Tray, screen, ipcMain, shell } = require('electron');
 const path = require('path');
 
 if (require('electron-squirrel-startup')) {
@@ -66,3 +66,8 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+ipcMain.on('open-folder', (event, arg) => {
+    mainWindow.hide();
+    shell.openPath(arg).then();
+})
