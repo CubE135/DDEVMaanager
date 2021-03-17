@@ -11,28 +11,47 @@ setInterval(() => {
 }, 1000)
 
 $(document).on('click', '.project .folder', function () {
-    let approot = $(this).attr('data-approot');
-    ipcRenderer.send('open-folder', approot);
+    let button = $(this);
+    let project = button.closest('.project');
+    let appRoot = project.attr('data-approot');
+    ipcRenderer.send('open-folder', appRoot);
 });
 
 $(document).on('click', '.project .buttons .startStop', function () {
     let button = $(this);
     let project = button.closest('.project');
+    let buttons = project.find('.buttons');
     let projectName = project.attr('data-project-name');
     let status = project.attr('data-status');
-    button.removeClass('fa-play').removeClass('fa-stop');
-    button.addClass('fa-spinner fa-pulse');
+    let btnLoading = buttons.find('.loading');
+    let btnStartStop = buttons.find('.startStop');
+    btnStartStop.hide();
+    btnLoading.show();
     if (status === 'running'){
-        cmdClient.stopDDEVProject(projectName, () => {
-            button.removeClass('fa-spinner fa-pulse');
-            button.addClass('fa-play');
+        cmdClient.stopDDEVProject(projectName, (success) => {
+            if (!success) return;
+            btnStartStop.removeClass('fa-stop');
+            btnStartStop.addClass('fa-play');
+            btnStartStop.show();
+            btnLoading.hide();
         });
     }else{
-        cmdClient.startDDEVProject(projectName, () => {
-            button.removeClass('fa-spinner fa-pulse');
-            button.addClass('fa-stop');
+        cmdClient.startDDEVProject(projectName, (success) => {
+            if (!success) return;
+            btnStartStop.removeClass('fa-play');
+            btnStartStop.addClass('fa-stop');
+            btnStartStop.show();
+            btnLoading.hide();
         });
     }
+});
+
+$(document).on('click', '.project .buttons .startCli', function () {
+    let button = $(this);
+    let project = button.closest('.project');
+    let status = project.attr('data-status');
+    let appRoot = project.attr('data-approot');
+    if(status === 'running') cmdClient.cliConnect(appRoot)
 });
 
 function fillProjectList() {

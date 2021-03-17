@@ -13,6 +13,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: auto;
     background-color: $color_background;
+    user-select: none;
     &::-webkit-scrollbar {
         width: 5px;
     }
@@ -92,6 +93,9 @@ main {
                 &:hover:not([disabled]) {
                     color: $color_white;
                 }
+            }
+            .loading {
+                display: none;
             }
         }
         &:hover {

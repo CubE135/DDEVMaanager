@@ -11,13 +11,19 @@ module.exports = class CmdClient {
 
     stopDDEVProject(projectName, callback) {
         exec('ddev stop '+projectName, (error, stdout, stderr) => {
-            callback(stdout)
+            callback(stderr === '')
         });
     }
 
     startDDEVProject(projectName, callback) {
         exec('ddev start '+projectName, (error, stdout, stderr) => {
-            callback(stdout)
+            callback(stderr === '')
+        });
+    }
+
+    cliConnect(appRoot, callback){
+        exec('start cmd /k "cd /D '+appRoot+' & ddev ssh"', (error, stdout, stderr) => {
+            callback(stderr === '')
         });
     }
 }
