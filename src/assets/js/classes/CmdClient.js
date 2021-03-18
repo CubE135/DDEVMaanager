@@ -1,6 +1,12 @@
 const exec = require('child_process').exec;
 
 module.exports = class CmdClient {
+    getDockerStatus(callback){
+        exec('docker ps', (error, stdout, stderr) => {
+            callback(stderr === '')
+        });
+    }
+
     getDDEVProjectList(callback) {
         exec(`ddev list -j`, (error, stdout, stderr) => {
             let escaped = stdout.replace(/\r?\n|\r/g, "").replace(/\\/g,"\\\\");

@@ -65,10 +65,25 @@ function fillProjectList() {
 }
 
 function updateProjectList() {
+    checkDockerStatus();
     cmdClient.getDDEVProjectList(function (projects) {
         projects.forEach(function (projectData) {
             let project = new Project(projectData);
             project.update();
         });
+    });
+}
+
+function checkDockerStatus() {
+    cmdClient.getDockerStatus((status) => {
+        let overlay = $('#overlay')
+        let body = $('body')
+        if(!status){
+            overlay.css('display', 'flex');
+            body.addClass('overlay-active');
+        }else{
+            overlay.hide();
+            body.removeClass('overlay-active');
+        }
     });
 }
