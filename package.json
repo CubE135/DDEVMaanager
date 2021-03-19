@@ -1,7 +1,7 @@
 {
   "name": "ddevmanager",
   "productName": "DDEVManager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fancy application to manage DDEV projects.",
   "main": "src/index.js",
   "scripts": {

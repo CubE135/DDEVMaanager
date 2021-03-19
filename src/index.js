@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, screen, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, Menu, Tray, screen, ipcMain, shell } = require('electron');
 const path = require('path');
 
 require('update-electron-app')({
@@ -57,6 +57,11 @@ const createTray = () => {
     let iconPath = path.join(__dirname, 'assets/img/icon.ico');
     tray = new Tray(iconPath);
     tray.setToolTip('DDEVManager');
+
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Quit DDEVManager', type: 'normal', click: app.quit}
+    ])
+    tray.setContextMenu(contextMenu)
 
     tray.on('click', createWindow);
 }
