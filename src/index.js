@@ -1,6 +1,10 @@
 const { app, BrowserWindow, Tray, screen, ipcMain, shell } = require('electron');
 const path = require('path');
 
+require('update-electron-app')({
+    notifyUser: false
+})
+
 app.setLoginItemSettings({
     openAtLogin: true
 })
