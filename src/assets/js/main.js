@@ -54,6 +54,17 @@ $(document).on('click', '.project .buttons .startCli', function () {
     if(status === 'running') cmdClient.cliConnect(appRoot)
 });
 
+$(document).on('click', '#poweroff', function () {
+    let btnLoading = $(this).find('.loading');
+    let btnPowerOff = $(this).find('.powerOff');
+    btnLoading.show()
+    btnPowerOff.hide()
+    cmdClient.ddevPowerOff(function () {
+        btnLoading.hide()
+        btnPowerOff.show()
+    });
+})
+
 function fillProjectList() {
     $('main').empty();
     cmdClient.getDDEVProjectList(function (projects) {

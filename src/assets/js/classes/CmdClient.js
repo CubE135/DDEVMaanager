@@ -27,6 +27,12 @@ module.exports = class CmdClient {
         });
     }
 
+    ddevPowerOff(callback) {
+        exec('ddev poweroff', (error, stdout, stderr) => {
+            callback(stderr === '')
+        });
+    }
+
     cliConnect(appRoot, callback){
         exec('start cmd /k "cd /D '+appRoot+' & ddev ssh"', (error, stdout, stderr) => {
             callback(stderr === '')

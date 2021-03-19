@@ -1,6 +1,10 @@
 const { app, BrowserWindow, Tray, screen, ipcMain, shell } = require('electron');
 const path = require('path');
 
+app.setLoginItemSettings({
+    openAtLogin: true
+})
+
 if (require('electron-squirrel-startup')) {
     app.quit();
 }
