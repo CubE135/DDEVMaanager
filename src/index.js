@@ -1,12 +1,9 @@
-const { app, BrowserWindow, Menu, Tray, screen, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, Menu, Tray, screen, ipcMain, shell, Notification } = require('electron');
 const path = require('path');
 
-require('update-electron-app')({
-    notifyUser: false
-})
-
 app.setLoginItemSettings({
-    openAtLogin: true
+    openAtLogin: true,
+    path: app.getPath('exe')
 })
 
 if (require('electron-squirrel-startup')) {
@@ -64,6 +61,45 @@ const createTray = () => {
     tray.setContextMenu(contextMenu)
 
     tray.on('click', createWindow);
+}
+
+app.whenReady().then(() => checkForUpdates())
+const checkForUpdates = () => {
+    const { net } = require('electron')
+    let appVersion = app.getVersion()
+
+    const request = net.request({
+        method: 'GET',
+        protocol: 'https:',
+        hostname: 'api.github.com',
+        port: 443,
+        path: '/repos/CubE135/DDEVMaanager/releases/latest'
+    })
+    request.on('response', (response) => {
+        if(!(response.statusCode === 200)) return;
+        response.on('data', (chunk) => {
+            let json = JSON.parse(chunk.toString())
+            let version = json.tag_name.replace('v', '')
+            if(version > appVersion){
+                showUpdateNotification()
+            }
+        })
+    })
+    request.end()
+}
+
+const showUpdateNotification = () => {
+    app.setAppUserModelId(app.name);
+    const options = {
+        title: 'Update Available!',
+        body: 'Click to download the latest version of DDEVManager.',
+        icon: __dirname + '/assets/img/icon.ico'
+    }
+    let notification = new Notification(options)
+    notification.show()
+    notification.on('click', (event, arg)=>{
+        shell.openExternal("https://github.com/CubE135/DDEVMaanager/releases").then()
+    })
 }
 
 app.on('ready', createTray);

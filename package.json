@@ -1,7 +1,7 @@
 {
   "name": "ddevmanager",
   "productName": "DDEVManager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A fancy application to manage DDEV projects.",
   "main": "src/index.js",
   "scripts": {
@@ -67,8 +67,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.6.0",
-    "update-electron-app": "^2.0.1"
+    "jquery": "^3.6.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
