@@ -73,7 +73,7 @@ const checkForUpdates = () => {
         protocol: 'https:',
         hostname: 'api.github.com',
         port: 443,
-        path: '/repos/CubE135/DDEVMaanager/releases/latest'
+        path: '/repos/CubE135/DDEVManager/releases/latest'
     })
     request.on('response', (response) => {
         if(!(response.statusCode === 200)) return;
@@ -98,7 +98,7 @@ const showUpdateNotification = () => {
     let notification = new Notification(options)
     notification.show()
     notification.on('click', (event, arg)=>{
-        shell.openExternal("https://github.com/CubE135/DDEVMaanager/releases").then()
+        shell.openExternal("https://github.com/CubE135/DDEVManager/releases").then()
     })
 }
 

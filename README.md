@@ -2,7 +2,7 @@
 
 A fancy Desktop Application to manage your DDEV Projects.
 
-![Screenshot](https://raw.githubusercontent.com/CubE135/DDEVMaanager/master/src/assets/img/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/CubE135/DDEVManager/master/src/assets/img/screenshot.png)
 
 ## Installation
 
